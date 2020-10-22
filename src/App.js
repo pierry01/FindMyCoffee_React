@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
+import Establishment from './components/Establishment'
 import EstablishmentsService from './services/establishments_service'
 
 const App = () => {
@@ -8,7 +9,9 @@ const App = () => {
   const [latitude, setLatitude] = useState(0)
   const [longitude, setLongitude] = useState(0)
   const [locations, setLocations] = useState([])
+  const [selected, setSelected] = useState({})
 
+  // eslint-disable-next-line
   useEffect(() => { setCurrentLocation() }, [])
 
   const setCurrentLocation = async () => {
@@ -46,9 +49,16 @@ const App = () => {
                     lat: item.geometry.location.lat, 
                     lng: item.geometry.location.lng
                   }}
+                  onClick={() => setSelected(item)}
                 />
               )
             })
+          }
+          
+          {
+            selected.place_id && (
+              <Establishment place={selected} />
+            )
           }
 
           <Marker
