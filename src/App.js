@@ -1,11 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { GoogleMap, LoadScript } from '@react-google-maps/api'
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
+import EstablishmentsService from './services/establishments_service'
 
 const App = () => {
   const { REACT_APP_GOOGLE_API_KEY } = process.env
 
   const [latitude, setLatitude] = useState(0)
   const [longitude, setLongitude] = useState(0)
+  const [locations, setLocations] = useState([])
 
   useEffect(() => { setCurrentLocation() }, [])
 
@@ -13,9 +15,15 @@ const App = () => {
     await navigator.geolocation.getCurrentPosition(position => {
       setLatitude(position.coords.latitude)
       setLongitude(position.coords.longitude)
+      loadCoffeeShops()
     }, error => {
       alert('Habilite a localização para usar este APP.')
     })
+  }
+
+  const loadCoffeeShops = async () => {
+    const response = await EstablishmentsService.index(latitude, longitude)
+    setLocations(response.data.results)
   }
 
   return (
@@ -26,7 +34,32 @@ const App = () => {
           zoom={ 15 }
           center={{ lat: latitude, lng: longitude }}
         >
-        
+          {
+            locations.map((item, key) => {
+              return (
+                <Marker 
+                  key={ key }
+                  icon='/images/coffee-pin.png'
+                  title={ item.name }
+                  animation='4'
+                  position={{
+                    lat: item.geometry.location.lat, 
+                    lng: item.geometry.location.lng
+                  }}
+                />
+              )
+            })
+          }
+
+          <Marker
+            title='Your location'
+            icon='/images/my-location-pin.png'
+            animation='2'
+            position={{
+              lat: latitude,
+              lng: longitude
+            }}
+          />
         </GoogleMap>
       </LoadScript>
     </Fragment>
