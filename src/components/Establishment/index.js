@@ -25,7 +25,7 @@ const Establishment = (props) => {
         (establishment.photos) ?
           <Image 
             src={
-              `https://maps.googleapis.com/maps/api/place/photo?photoreference=${ establishment.photos[0].photo_reference }&key=${ REACT_APP_GOOGLE_API_KEY }`
+              `https://maps.googleapis.com/maps/api/place/photo?photoreference=${ establishment.photos[0].photo_reference }&key=${ REACT_APP_GOOGLE_API_KEY }&maxwidth=400`
             }
             alt='Coffee Photo'
           /> : <Image src='/images/no_photo.jpg' alt='Coffee no Photo' />

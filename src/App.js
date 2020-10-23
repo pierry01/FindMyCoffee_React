@@ -40,13 +40,13 @@ const App = () => {
           {
             locations.map((item, key) => {
               return (
-                <Marker 
+                <Marker
                   key={ key }
                   icon='/images/coffee-pin.png'
                   title={ item.name }
                   animation='4'
                   position={{
-                    lat: item.geometry.location.lat, 
+                    lat: item.geometry.location.lat,
                     lng: item.geometry.location.lng
                   }}
                   onClick={() => setSelected(item)}
@@ -54,12 +54,8 @@ const App = () => {
               )
             })
           }
-          
-          {
-            selected.place_id && (
-              <Establishment place={selected} />
-            )
-          }
+
+          { selected.place_id && <Establishment place={selected} /> }
 
           <Marker
             title='Your location'
