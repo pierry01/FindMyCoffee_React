@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
 import Establishment from './components/Establishment'
+import NearestCoffees from './components/NearestCoffees'
 import EstablishmentsService from './services/establishments_service'
 
 const App = () => {
@@ -66,6 +67,11 @@ const App = () => {
               lng: longitude
             }}
           />
+          
+          {
+            (latitude !== 0 && longitude !== 0) &&
+              <NearestCoffees latitude={ latitude } longitude={ longitude } />
+          }
         </GoogleMap>
       </LoadScript>
     </Fragment>
