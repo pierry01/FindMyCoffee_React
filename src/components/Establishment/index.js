@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import EstablishmentsService from '../../services/establishments_service'
 import { LeftBar, Image, Title, Paragraph } from './styles'
+import Ratings from './Ratings'
 
-const Establishment = (props) => {
+const Establishment = ({ place }) => {
   const { REACT_APP_GOOGLE_API_KEY } = process.env
 
   const [establishment, setEstablishment] = useState([])
 
   // eslint-disable-next-line
-  useEffect(() => { getEstablishmentDetails() }, [props.place])
+  useEffect(() => { getEstablishmentDetails() }, [place])
 
   const getEstablishmentDetails = async () => {
     try {
-      const response = await EstablishmentsService.show(props.place.place_id)
+      const response = await EstablishmentsService.show(place.place_id)
       setEstablishment(response.data.result)
     } catch (e) {
       setEstablishment([])
@@ -53,6 +54,8 @@ const Establishment = (props) => {
       <hr />
       
       <Paragraph>{ establishment.formatted_address }</Paragraph>
+      
+      <Ratings place={ place } />
     </LeftBar>
   )
 }

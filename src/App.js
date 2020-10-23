@@ -34,7 +34,7 @@ const App = () => {
       <LoadScript googleMapsApiKey={ REACT_APP_GOOGLE_API_KEY }>
         <GoogleMap
           mapContainerStyle={{ height: '100vh', width: '100%' }}
-          zoom={ 15 }
+          zoom={ 1 }
           center={{ lat: latitude, lng: longitude }}
         >
           {
