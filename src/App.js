@@ -67,7 +67,7 @@ const App = () => {
               lng: longitude
             }}
           />
-          
+
           {
             (latitude !== 0 && longitude !== 0) &&
               <NearestCoffees latitude={ latitude } longitude={ longitude } />
