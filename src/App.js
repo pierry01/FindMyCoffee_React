@@ -19,14 +19,14 @@ const App = () => {
     await navigator.geolocation.getCurrentPosition(position => {
       setLatitude(position.coords.latitude)
       setLongitude(position.coords.longitude)
-      loadCoffeeShops()
+      loadCoffeeShops(position.coords.latitude, position.coords.longitude)
     }, error => {
       alert('Habilite a localização para usar este APP.')
     })
   }
 
-  const loadCoffeeShops = async () => {
-    const response = await EstablishmentsService.index(latitude, longitude)
+  const loadCoffeeShops = async (lat, lng) => {
+    const response = await EstablishmentsService.index(lat, lng)
     setLocations(response.data.results)
   }
 
